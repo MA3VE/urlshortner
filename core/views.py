@@ -29,5 +29,9 @@ def find_code_view(requests,code,*args, **kwargs):
         return redirect("/")
         
     return redirect(qs.first().url)
+
+@api_view(['GET'])
+def home_view(requests,*args, **kwargs):
+    return render(requests,'home.html')
     
     

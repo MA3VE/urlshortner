@@ -16,14 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 
-from core.views import create_code_view,find_code_view
+from core.views import create_code_view,find_code_view,home_view
 
 urlpatterns = [
+    path('',home_view),
     path('api/', create_code_view),
-
     path('<str:code>',find_code_view),
-
-
     path('admin/', admin.site.urls),
 
 ]
