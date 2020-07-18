@@ -12,9 +12,10 @@ def create_code_view(requests,*args, **kwargs):
     url = requests.data["url"]
     letters_and_digits = string.ascii_lowercase + string.digits
 
+    code = ''.join((random.choice(letters_and_digits) for i in range(5)))
     
     while Url_model.objects.filter(code=code).exists():
-        code = ''.join((random.choice(letters_and_digits) for i in range(5)))
+            code = ''.join((random.choice(letters_and_digits) for i in range(5)))
         
     url_model.url = url.strip()
     url_model.code = code
@@ -27,8 +28,12 @@ def find_code_view(requests,code,*args, **kwargs):
     qs = Url_model.objects.filter(code=code)
     if not qs.exists():
         return redirect("/")
+    try:
+        return redirect(qs.first().url)
+
+    except :
+        return render(requests,'home.html',context={"error":"invalid_url"})
         
-    return redirect(qs.first().url)
 
 @api_view(['GET'])
 def home_view(requests,*args, **kwargs):

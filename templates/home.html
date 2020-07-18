@@ -1,3 +1,72 @@
 {% extends "base.html" %} {% block content %}
-<h1>hello world</h1>
+
+<div class="container">
+    <div class="row justify-content-center my-row-1">
+        <div class="row">
+            <div class="col align-self-end">
+                <h1>Welcome to UrlShotner</h1>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center input my-row-2">
+        <div class="col align-items-start">
+            <form id="my-form">
+                <div class="form-group">
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="url"
+                        name="url"
+                    />
+                    {%csrf_token%}
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    get shorurl
+                </button>
+            </form>
+            <div class="col align-items-start">
+                <h4 id="result_code"></h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .my-row-1 {
+        height: 30%;
+    }
+    .my-row-2 {
+        height: 70%;
+    }
+    html,
+    body,
+    .container {
+        height: 100%;
+        text-align: center;
+    }
+</style>
+
+<script>
+    // import axios from "axios";
+    // const axios = require("axios");
+    // console.log(axios);
+    let form = document.getElementById("my-form");
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        formdata = new FormData(e.target);
+        // console.log();
+        const xhr = new XMLHttpRequest();
+        xhr.responseType = "json";
+        xhr.open("POST", "api/");
+        xhr.onload = () => {
+            console.log(xhr.response);
+            // result_url = document.getElementById("result_url");
+            result_code = document.getElementById("result_code");
+            // result_url.innerHTML = `your url : ${xhr.response.url}`;
+            result_code.innerHTML = `shorturl: http://localhost:8000/${xhr.response.code}`;
+        };
+        xhr.send(formdata);
+    });
+</script>
 {% endblock content %}
